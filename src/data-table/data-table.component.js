@@ -1,7 +1,13 @@
 import template from './data-table.component.html';
+import mdlStyle from '!!css-to-string-loader!!css-loader!!material-design-lite/material.min.css';
+import 'material-design-lite/material.min';
+
+const templateStyle = document.createElement('style');
+templateStyle.innerHTML = mdlStyle;
 
 const tableTemplate = document.createElement('template');
 tableTemplate.innerHTML = template;
+tableTemplate.content.appendChild(templateStyle);
 
 class DataApp extends HTMLElement {
     constructor() {
