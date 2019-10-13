@@ -1,3 +1,5 @@
+import './data-table-row/data-table-row.component';
+
 import template from './data-table.component.html';
 import mdlStyle from '!!css-to-string-loader!!css-loader!!material-design-lite/material.min.css';
 import dataTableStyle from '!!css-to-string-loader!!css-loader!!./data-table.component.css';
