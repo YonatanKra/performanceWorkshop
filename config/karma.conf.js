@@ -1,10 +1,10 @@
-const webpackConf = require('./webpack.config');
+const webpackConf = require('./webpack.prod');
 
 module.exports = function (config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: '..',
 
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
