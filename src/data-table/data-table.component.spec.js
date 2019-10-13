@@ -21,9 +21,9 @@ describe('Data Table', () => {
             {id: Math.random().toString(), name: 'Name 3'}
         ];
 
-        const elementsBeforeRefresh = appRoot.querySelectorAll('app-data-table-row');
+        const elementsBeforeRefresh = appRoot.querySelectorAll('data-table-row');
         appElement.refreshData(data);
-        const elementsAfterRefresh = appRoot.querySelectorAll('app-data-table-row');
+        const elementsAfterRefresh = appRoot.querySelectorAll('data-table-row');
 
         expect(elementsBeforeRefresh.length).toEqual(0);
         expect(elementsAfterRefresh.length).toEqual(data.length);

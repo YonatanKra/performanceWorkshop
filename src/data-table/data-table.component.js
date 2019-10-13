@@ -1,9 +1,10 @@
 import template from './data-table.component.html';
 import mdlStyle from '!!css-to-string-loader!!css-loader!!material-design-lite/material.min.css';
+import dataTableStyle from '!!css-to-string-loader!!css-loader!!./data-table.component.css';
 import 'material-design-lite/material.min';
 
 const templateStyle = document.createElement('style');
-templateStyle.innerHTML = mdlStyle;
+templateStyle.innerHTML = mdlStyle + dataTableStyle;
 
 const tableTemplate = document.createElement('template');
 tableTemplate.innerHTML = template;
@@ -19,7 +20,7 @@ class DataApp extends HTMLElement {
 
     refreshData(data) {
         data.forEach(datum => {
-            const element = document.createElement('app-data-table-row');
+            const element = document.createElement('data-table-row');
             element.setAttribute('name', datum.name);
             this._dataTable.appendChild(element);
         });
