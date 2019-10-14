@@ -3,16 +3,11 @@ import './data-table/data-table.component';
 const searchBar = document.createElement('search-bar');
 const dataTable = document.createElement('data-table');
 
-const queryServer = 'http://localhost:3002';
+const queryServer = 'api/search';
 searchBar.setAttribute('data-url', queryServer);
-
+searchBar.addEventListener('query-response', e => {
+    dataTable.refreshData(e.detail);
+});
 document.body.appendChild(searchBar);
 document.body.appendChild(dataTable);
-dataTable.refreshData([
-    {
-        name: 'Johnny'
-    },
-    {
-        name: 'Lissa'
-    }
-]);
+
