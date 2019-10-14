@@ -1,6 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    entry: [
+      'material-design-lite/material',
+       './src/index.js',
+    ],
     plugins: [
         // create our index.html to view our app in the browser
         new HtmlWebpackPlugin({
