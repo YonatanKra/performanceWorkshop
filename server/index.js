@@ -4,7 +4,7 @@ const app = express();
 const faker = require('faker');
 const port = process.env.PORT || 3002;
 
-const nResponses = 10;
+const nResponses = 100;
 
 function generateData() {
     let users = [];
