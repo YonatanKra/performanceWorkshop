@@ -9,6 +9,9 @@ class DataTableRow extends HTMLElement {
     }
 
     connectedCallback() {
+        if (this.ready) {
+            return;
+        }
         this.appendChild(rowTemplate.content.cloneNode(true));
         this.ready = true;
         DataTableRow.observedAttributes.forEach(attribute => {
