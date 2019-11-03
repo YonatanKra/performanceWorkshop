@@ -23,8 +23,19 @@ class DataApp extends HTMLElement {
         data.forEach(datum => {
             const element = document.createElement('data-table-row');
             element.setAttribute('name', datum.name);
-            this._dataTable.appendChild(element);
+            
+            this._dataTable.prepend(element);
         });
+
+        DataApp.emitEvent(this, 'data-table-updated', {
+            scrollEnd: this._dataTable.scrollHeight
+        });
+    }
+
+    static emitEvent(ctx, eventName, data, options = { bubbles: false, cancelable: false }) {
+        options.detail = data;
+        const event = new CustomEvent(eventName, options);
+        ctx.dispatchEvent(event);
     }
 }
 if (!customElements.get('data-table')) {
