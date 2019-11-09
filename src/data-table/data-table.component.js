@@ -23,6 +23,8 @@ class DataApp extends HTMLElement {
         data.forEach(datum => {
             const element = document.createElement('data-table-row');
             element.setAttribute('name', datum.name);
+            element.setAttribute('id', datum.id);
+            element.setAttribute('email', datum.email);
             
             this._dataTable.prepend(element);
         });

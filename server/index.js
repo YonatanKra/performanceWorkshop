@@ -16,7 +16,7 @@ function generateData() {
         let email = faker.internet.email();
 
         users.push({
-            "id": Math.random(),
+            "id": `${i}-${new Date().getTime()}`,
             "name": firstName + lastName,
             "email": email
         });
@@ -27,7 +27,11 @@ function generateData() {
 
 // routes will go here
 app.post('/api/search', function(req, res) {
-    res.send(generateData());
+    const dataFetchDelay = 5000 * Math.random();
+    setTimeout(() => {
+        res.send(generateData());
+    }, dataFetchDelay);
+
 });
 
 app.use(express.static('dist'));

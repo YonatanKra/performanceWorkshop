@@ -2,7 +2,6 @@ import template from './data-table-row.component.html';
 
 const rowTemplate = document.createElement('template');
 rowTemplate.innerHTML = template;
-
 class DataTableRow extends HTMLElement {
     constructor() {
         super();
@@ -21,7 +20,7 @@ class DataTableRow extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['name'];
+        return ['name', 'id', 'email'];
     }
 
     attributeChangedCallback(attribute, oldValue, newValue) {
