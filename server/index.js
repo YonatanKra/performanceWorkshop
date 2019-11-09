@@ -16,7 +16,7 @@ function generateData() {
         let email = faker.internet.email();
 
         users.push({
-            "id": Math.random(),
+            "id": `${i}-${new Date().getTime()}`,
             "name": firstName + lastName,
             "email": email
         });
