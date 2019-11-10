@@ -4,13 +4,21 @@ template.innerHTML = `
     :host {
         display: block;
         width: 100%;
-        height: 2px;
+        height: 1.1em;
         position: relative;
         overflow: hidden;
     }
     :host([hidden]) {
         display: none !important;
     }
+    
+    #text {
+        z-index: 999;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+    
     #primaryProgress {
         background: var(--progress-bar-color, #37A0CE);
         position:  absolute;
@@ -65,6 +73,7 @@ template.innerHTML = `
     }
 </style>
 
+<span id="text">Loading...</span>
 <div id="primaryProgress"></div>
 `;
 
@@ -80,7 +89,7 @@ class ProgressBar extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['disabled'];
+        return ['disabled', 'text'];
     }
 
     get disabled() {
@@ -95,6 +104,15 @@ class ProgressBar extends HTMLElement {
         }
     }
 
+    get text() {
+        return this.getAttribute('text');
+    }
+
+    set text(value) {
+        if (value) {
+            this.setAttribute('text', value);
+        }
+    }
     _iterationCallback() {
         this.shadowRoot.querySelector('#primaryProgress').classList.add('finished');
     }
@@ -108,6 +126,10 @@ class ProgressBar extends HTMLElement {
             });
         else
             progress.classList.remove('finished');
+
+        if (this.text) {
+            this.shadowRoot.querySelector('#text').innerText = this.text;
+        }
     }
 }
 

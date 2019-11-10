@@ -26,6 +26,7 @@ class SearchBar extends HTMLElement {
     submitForm(event) {
         event.preventDefault();
         const ctx = this;
+
         fetch(this.getAttribute('data-url'), {
             method: 'post',
             headers: {
@@ -35,15 +36,17 @@ class SearchBar extends HTMLElement {
         })
             .then(json)
             .then(function (data) {
-                SearchBar.responseEvent(ctx, data);
+                SearchBar.responseEvent('query-response', ctx, data);
             })
             .catch(function (error) {
                 console.error('Request failed', error);
             });
+
+        SearchBar.responseEvent('query-sent', ctx);
     }
 
-    static responseEvent(ctx, data) {
-        const event = new CustomEvent('query-response', { bubbles: false, cancelable: false, detail: data });
+    static responseEvent(eventName, ctx, data) {
+        const event = new CustomEvent(eventName, { bubbles: false, cancelable: false, detail: data });
         ctx.dispatchEvent(event);
     }
 
