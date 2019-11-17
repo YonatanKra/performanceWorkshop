@@ -26,7 +26,7 @@ function generateData() {
 }
 
 // routes will go here
-app.post('/api/search', function(req, res) {
+app.get('/api/search', function(req, res) {
     res.send(generateData());
 });
 
