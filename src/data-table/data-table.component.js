@@ -36,6 +36,10 @@ class DataApp extends HTMLElement {
 
             this._dataTable.prepend(element);
         });
+
+        DataApp.emitEvent(this, 'refreshed-data', {
+            scrollHeight: this._dataTable.scrollHeight
+        });
     }
 
     sortByName(sorter) {
