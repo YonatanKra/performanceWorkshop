@@ -19,6 +19,17 @@ function bubbleSort(sortInput) {
     return sortedArray;
 }
 
+function fasterSort(sortInput) {
+    const sortedArray = JSON.parse(JSON.stringify(sortInput.data));
+    const prop = sortInput.sortBy;
+
+    return sortedArray.sort((a,b) => {
+        const valA = a[prop];
+        const valB = b[prop];
+        return valA > valB ? 1 : valA < valB ? -1 : 0;
+    });
+}
+
 const templateStyle = document.createElement('style');
 templateStyle.innerHTML = mdlStyle + dataTableStyle;
 
@@ -54,7 +65,7 @@ class DataApp extends HTMLElement {
         });
     }
 
-    sortByName() {
+    sortByName(faster) {
         if (!this._data) return;
         this.sorted = !this.sorted;
         let sortBy = 'name';
@@ -62,7 +73,13 @@ class DataApp extends HTMLElement {
             sortBy = 'id';
         }
 
-        const sortedArray = bubbleSort({data: this._data, sortBy});
+        let sortedArray;
+        if (faster) {
+            sortedArray = fasterSort({data: this._data, sortBy});
+        } else {
+            sortedArray = bubbleSort({data: this._data, sortBy});
+        }
+
         this.refreshData(sortedArray, true);
     }
 
