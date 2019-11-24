@@ -2,9 +2,9 @@
 const express = require('express');
 const app = express();
 const faker = require('faker');
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 
-const nResponses = 1000;
+const nResponses = 10000;
 
 function generateData() {
     let users = [];
