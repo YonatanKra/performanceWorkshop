@@ -35,6 +35,10 @@ class DataApp extends HTMLElement {
             element.setAttribute('email', datum.email);
 
             this._dataTable.prepend(element);
+
+            DataApp.emitEvent(this, 'added-row', {
+                text: element.innerText
+            });
         });
 
         DataApp.emitEvent(this, 'refreshed-data', {
