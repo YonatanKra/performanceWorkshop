@@ -4,21 +4,6 @@ import template from './data-table.component.html';
 import mdlStyle from '!!css-to-string-loader!!css-loader!!material-design-lite/material.min.css';
 import dataTableStyle from '!!css-to-string-loader!!css-loader!!./data-table.component.css';
 
-function bubbleSort(sortInput) {
-    const sortedArray = JSON.parse(JSON.stringify(sortInput.data));
-    const prop = sortInput.sortBy;
-    for (let i = 0; i < sortedArray.length; i++) {
-        for (let j = i + 1; j < sortedArray.length - 1; j++) {
-            if (sortedArray[i][prop] > sortedArray[j][prop]) {
-                const tmp = sortedArray[i];
-                sortedArray[i] = sortedArray[j];
-                sortedArray[j] = tmp;
-            }
-        }
-    }
-    return sortedArray;
-}
-
 const templateStyle = document.createElement('style');
 templateStyle.innerHTML = mdlStyle + dataTableStyle;
 
@@ -36,9 +21,8 @@ class DataApp extends HTMLElement {
     }
 
     refreshData(data, clear = false) {
-        data.reverse();
         if (!clear) {
-            this._data = [...data, ...this._data];
+            this._data = [...this._data, ...data];
         } else {
             this._data = data;
             this._dataTable.innerHTML = '';
@@ -54,7 +38,7 @@ class DataApp extends HTMLElement {
         });
     }
 
-    sortByName() {
+    sortByName(sorter) {
         if (!this._data) return;
         this.sorted = !this.sorted;
         let sortBy = 'name';
@@ -62,7 +46,7 @@ class DataApp extends HTMLElement {
             sortBy = 'id';
         }
 
-        const sortedArray = bubbleSort({data: this._data, sortBy});
+        let sortedArray = sorter({data: this._data, sortBy});
         this.refreshData(sortedArray, true);
     }
 
