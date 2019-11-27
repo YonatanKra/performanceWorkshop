@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Async CRP</title>
+</head>
+<body>
+<button id="async">Async</button>
+<script>
+    function handleEffect() {
+        const x = [];
+        for (let i = 0; i < 1000000; i++){
+            x.push(i);
+        }
+        const element = document.createElement('div');
+        element.innerText = 'Awesomeness!!!';
+        document.body.appendChild(element);
+    }
+
+    function awesomeEffect() {
+        return new Promise((res, rej) => {
+            setTimeout(res, 200);
+        });
+    }
+
+    function prepareForAwesome() {
+        setTimeout(() => {
+            console.log('Timed out');
+            handleEffect();
+        }, 1000);
+    }
+
+    const button = document.getElementById('async');
+    button.addEventListener('click', () => {
+       prepareForAwesome();
+       awesomeEffect().then(handleEffect);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+    <title>Animation</title>
+    <style>
+        #flow {
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let left = 0;
+
+        function noReflow() {
+            const element = document.getElementById('flow');
+            console.log(element.innerText);
+            element.style.left = `${left++}px`;
+        }
+
+        function thrashingAnimation() {
+            left = 0;
+            let length = Number(document.getElementById('animation-length').value);
+            length = Number.isFinite(length) ? length : 100;
+
+            for (let i = 0; i < length; i++) {
+                noReflow();
+            }
+        }
+
+        function timedAnimation() {
+            function timeAnimate() {
+                if (i < length) {
+                    setTimeout(() => {
+                        noReflow();
+                        timeAnimate();
+                    });
+                }
+                i++;
+            }
+            left = 0;
+            let length = Number(document.getElementById('animation-length').value);
+            length = Number.isFinite(length) ? length : 100;
+            let i = 0;
+
+            timeAnimate();
+        }
+
+        function animation() {
+            function animate() {
+                if (i < length) {
+                    requestAnimationFrame(() => {
+                        noReflow();
+                        animate();
+                    });
+                }
+                i++;
+            }
+            left = 0;
+            let length = Number(document.getElementById('animation-length').value);
+            length = Number.isFinite(length) ? length : 100;
+
+            let i = 0;
+
+            animate();
+        }
+    </script>
+    <input id="animation-length">
+    <button onclick="thrashingAnimation()">Thrashing Animation</button>
+    <button onclick="timedAnimation()">Set Timeout</button>
+    <button onclick="animation()">Animation</button>
+    <div id="flow">Some test<div>More text</div></div>
+
+</body>
+</html>

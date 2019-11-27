@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <title>Sync Thrashing Solution</title>
+    <style>
+        #parent {
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="thrash()">Thrash</button>
+    <button onclick="noThrash()">No Thrash</button>
+    <div id="parent"></div>
+    <script>
+
+    function thrash() {
+        for (let i = 0; i < parentElement.childElementCount; i++) {
+            const child = parentElement.children[i];
+            child.style.width = parentElement.getBoundingClientRect().width;
+        }
+    }
+
+    function noThrash() {
+        const parentWidth = parentElement.getBoundingClientRect().width;
+        for (let i = 0; i < parentElement.childElementCount; i++) {
+            const child = parentElement.children[i];
+            child.style.width = parentWidth;
+        }
+    }
+
+    function loadContent() {
+        for (let i = 0; i < 1000; i++) {
+            parentElement.appendChild(document.createElement('div'));
+        }
+    }
+
+    const parentElement = document.getElementById('parent');
+    loadContent();
+
+</script>
+</body>
+</html>

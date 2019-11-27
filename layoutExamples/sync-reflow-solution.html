@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <title>Sync Reflow Solution</title>
+    <style>
+        #flow {
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let left = 0;
+        function reflow() {
+            const element = document.getElementById('flow');
+            element.style.left = `${left++}px`;
+            console.log(element.innerText);
+        }
+
+        function noReflow() {
+            const element = document.getElementById('flow');
+            console.log(element.innerText);
+            element.style.left = `${left++}px`;
+        }
+
+    </script>
+    <button onclick="reflow()">Reflow</button>
+    <button onclick="noReflow()">No Reflow</button>
+    <div id="flow">Some test<div>More text</div></div>
+
+</body>
+</html>

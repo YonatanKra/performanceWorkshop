@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <title>Async Thrashing Solution</title>
+    <style>
+        #parent {
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="thrashingAPI()">Thrashing API</button>
+    <button onclick="nonThrashingAPI()">No Thrash API</button>
+    <div id="progress"></div>
+    <div id="parent"></div>
+    <script>
+
+        function emitChildUpdate(parentElement, childElement) {
+            const options = { bubbles: false, cancelable: false, detail: {parentElement, childElement}};
+            const event = new CustomEvent('child-updated', options);
+            document.dispatchEvent(event);
+        }
+
+        function thrashingAPI() {
+            const parentWidth = parentElement.getBoundingClientRect().width;
+            for (let i = 0; i < parentElement.childElementCount; i++) {
+                const child = parentElement.children[i];
+                child.style.width = parentWidth;
+                emitChildUpdate(parentElement, child)
+            }
+        }
+
+        function nonThrashingAPI() {
+            const parentWidth = parentElement.getBoundingClientRect().width;
+            for (let i = 0; i < parentElement.childElementCount; i++) {
+                const child = parentElement.children[i];
+                child.style.width = parentWidth;
+                setTimeout(() => {
+                    emitChildUpdate(parentElement, child)
+                }, 0);
+            }
+        }
+
+        function loadContent() {
+            for (let i = 0; i < 1000; i++) {
+                parentElement.appendChild(document.createElement('div'));
+            }
+        }
+
+        const parentElement = document.getElementById('parent');
+
+        loadContent();
+        document.addEventListener('child-updated', e => {
+            console.log(e.detail.parentElement.getBoundingClientRect().height);
+        });
+
+    </script>
+</body>
+</html>
