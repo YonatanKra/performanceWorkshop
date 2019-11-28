@@ -1,3 +1,7 @@
+.data-table {
+    overflow: scroll;
+}
+
 .data-table-row {
     width: 100%;
     margin: 5px;

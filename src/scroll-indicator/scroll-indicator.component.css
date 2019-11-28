@@ -1,0 +1,13 @@
+#indicator {
+    background-color: green;
+    height: 10px;
+    width: 20px;
+    position: relative;
+}
+
+#scroll-indicator {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}

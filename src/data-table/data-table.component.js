@@ -17,10 +17,21 @@ class DataApp extends HTMLElement {
         const shadowRoot = this.attachShadow({mode: "open"});
         shadowRoot.appendChild(tableTemplate.content.cloneNode(true));
         this._dataTable = shadowRoot.querySelector('.data-table');
+        this._dataTable.style.height = (window.innerHeight * .75) + 'px';
         this._data = [];
+        this.propagateTableScroll();
     }
 
-    refreshData(data, clear = false) {
+    propagateTableScroll() {
+        this._dataTable.addEventListener('scroll', () => {
+           DataApp.emitEvent(this, 'table-scroll', {
+               scrollHeight: this._dataTable.scrollTop,
+               tableHeight: this._dataTable.scrollHeight
+           });
+        });
+        }
+
+    refreshData(data, clear) {
         if (!clear) {
             this._data = [...this._data, ...data];
         } else {
@@ -41,8 +52,10 @@ class DataApp extends HTMLElement {
             });
         });
 
-        DataApp.emitEvent(this, 'refreshed-data', {
-            scrollHeight: this._dataTable.scrollHeight
+        DataApp.emitEvent(this, 'data-table-updated', {
+            data,
+            scrollHeight: this._dataTable.scrollTop,
+            tableHeight: this._dataTable.scrollHeight
         });
     }
 
