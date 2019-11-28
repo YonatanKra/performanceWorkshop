@@ -47,15 +47,20 @@ class DataApp extends HTMLElement {
 
             this._dataTable.prepend(element);
 
-            DataApp.emitEvent(this, 'added-row', {
-                text: element.innerText
+            requestAnimationFrame(() => {
+                DataApp.emitEvent(this, 'added-row', {
+                    text: element.innerText
+                });
             });
         });
 
-        DataApp.emitEvent(this, 'data-table-updated', {
-            data,
-            scrollHeight: this._dataTable.scrollTop,
-            tableHeight: this._dataTable.scrollHeight
+
+        requestAnimationFrame(() => {
+            DataApp.emitEvent(this, 'data-table-updated', {
+                data,
+                scrollHeight: this._dataTable.scrollTop,
+                tableHeight: this._dataTable.scrollHeight
+            });
         });
     }
 
