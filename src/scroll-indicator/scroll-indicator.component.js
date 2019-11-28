@@ -17,10 +17,11 @@ class ScrollIndicator extends HTMLElement {
         this._indicatorPos = 0;
     }
 
-    updateScroll(elementHeight, scrollTop, animate) {
-        this._indicator.style.left = 100 * (scrollTop / elementHeight) + '%';
+    updateScroll(elementHeight, scrollTop) {
+        const targetPosition = 100 * (scrollTop / elementHeight);
+        this._indicator.style.left =  targetPosition+ '%';
 
-        this._indicatorPos = this._indicator.style.left.replace('%', '');
+        this._indicatorPos = targetPosition;
     }
 }
 
