@@ -20,6 +20,8 @@ class DataApp extends HTMLElement {
         this._dataTable.style.height = (window.innerHeight * .75) + 'px';
         this._data = [];
         this.propagateTableScroll();
+        this.rows = [];
+        this.lastFree = this.freeRow = null;
     }
 
     propagateTableScroll() {
@@ -31,16 +33,55 @@ class DataApp extends HTMLElement {
         });
         }
 
+        addNewRow() {
+            const element = document.createElement('data-table-row');
+            this.rows.push(element);
+            this.releaseRow(element);
+            return element;
+        }
+
+        releaseRow(row) {
+            row.free = true;
+            row.nextRow = null;
+            row.previousRow = this.lastFree;
+            if (row.previousRow) {
+                this.lastFree.nextRow = row;
+            } else {
+                this.freeRow = row;
+            }
+            this.lastFree = row;
+        }
+
+        releaseAllRows() {
+            for (let i = 0; i < this.rows.length; i++) {
+                if (this.rows[i].free) {
+                    continue;
+                }
+                this.releaseRow(this.rows[i]);
+            }
+        }
+
+        getFreeRow() {
+            const row = this.freeRow ? this.freeRow : this.addNewRow();
+            // set the row as used
+            row.free = false;
+            this.freeRow = row.nextRow;
+            if (!this.freeRow) this.lastFree = null;
+            return row;
+        }
+
     refreshData(data, clear) {
         if (!clear) {
             this._data = [...this._data, ...data];
         } else {
             this._data = data;
             this._dataTable.innerHTML = '';
+            this.releaseAllRows();
         }
 
         data.forEach(datum => {
-            const element = document.createElement('data-table-row');
+            let element = this.getFreeRow();
+
             element.setAttribute('name', datum.name);
             element.setAttribute('id', datum.id);
             element.setAttribute('email', datum.email);
@@ -54,7 +95,6 @@ class DataApp extends HTMLElement {
             });
         });
 
-
         requestAnimationFrame(() => {
             DataApp.emitEvent(this, 'data-table-updated', {
                 data,
@@ -62,6 +102,8 @@ class DataApp extends HTMLElement {
                 tableHeight: this._dataTable.scrollHeight
             });
         });
+
+        console.log(this.rows.length);
     }
 
     sortByName(sorter) {

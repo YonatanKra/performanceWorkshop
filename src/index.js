@@ -27,5 +27,5 @@ dataTable.addEventListener('table-scroll', e => {
     scrollIndicator.updateScroll(e.detail.tableHeight, e.detail.scrollHeight);
 });
 
-
+console.log('Object Pool');
 
