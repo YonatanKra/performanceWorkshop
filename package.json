@@ -10,7 +10,9 @@
     "build:watch": "webpack --config ./config/webpack.prod.js --watch",
     "server": "nodemon --watch server ./server/index.js",
     "server:debug": "nodemon --watch server --inspect ./server/index.js",
-    "demo": "concurrently \"npm:server\" \"npm:build:watch\""
+    "demo": "concurrently \"npm:server\" \"npm:build:watch\"",
+    "gc:serve": "node --inspect=localhost:9230 gc/gc-example.js",
+    "gc:trigger": "curl localhost:8080"
   },
   "author": "kra.yonatan@gmail.com",
   "license": "MIT",
