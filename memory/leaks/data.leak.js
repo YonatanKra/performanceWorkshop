@@ -25,3 +25,7 @@ function leakObject() {
         console.log('Now it was really deleted!');
     }, 3000);
 }
+
+module.exports = {
+    leakObject,
+}

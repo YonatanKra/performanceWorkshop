@@ -31,7 +31,9 @@ function leakClosure() {
     setTimeout(() => window.clearInterval(interval), 5000);
 }
 
-
+module.exports = {
+    leakClosure
+};
 
 
 
