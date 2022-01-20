@@ -6,11 +6,11 @@ const {leakClosure} = require('./context');
 
 // routes will go here
 app.get('/context', function(req, res) {
-    leakClosure();
+    res.send(leakClosure());
 });
 
 app.get('/data', function(req, res) {
-    leakObject();
+    res.send(leakObject());
 });
 
 // start the server

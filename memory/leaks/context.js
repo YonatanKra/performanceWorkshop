@@ -1,3 +1,9 @@
+class Data {
+    constructor() {
+        this.data = new Array(1000000).fill(1)
+    }
+}
+
 /**
  * Closure leak
  */
@@ -28,7 +34,7 @@ function parentScope() {
 
 function leakClosure() {
     let interval = setInterval(parentScope, 500);
-    setTimeout(() => window.clearInterval(interval), 5000);
+    setTimeout(() => clearInterval(interval), 5000);
 }
 
 module.exports = {
