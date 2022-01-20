@@ -12,7 +12,11 @@
     "server:debug": "nodemon --watch server --inspect ./server/index.js",
     "demo": "concurrently \"npm:server\" \"npm:build:watch\"",
     "gc:serve": "node --inspect=localhost:9230 gc/gc-example.js",
-    "gc:trigger": "curl localhost:8080"
+    "gc:trigger": "curl localhost:8080",
+    "streams:generate": "node ./streams/generator.js",
+    "streams:serve": "cd ./streams && node --inspect ./fileConsumer && cd ..",
+    "streams:stream": "cd ./streams && curl localhost:8000/stream >> ./tmp.txt && cd ..",
+    "streams:nostream": "cd ./streams && curl localhost:8000 >> ./tmp.txt && cd .."
   },
   "author": "kra.yonatan@gmail.com",
   "license": "MIT",
